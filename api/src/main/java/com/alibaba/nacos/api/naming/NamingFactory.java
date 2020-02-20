@@ -29,6 +29,9 @@ public class NamingFactory {
 
     public static NamingService createNamingService(String serverList) throws NacosException {
         try {
+            // 这个地方很精彩，这不就是我一直在思考的插件加载模式么
+            // 实际的插件主类通过接口的形式定义出来，然后通过 Class.forName 触发类加载
+            // 在获取到该类后通过构造函数 new 出来，这样就实现了可插拔的方式
             Class<?> driverImplClass = Class.forName("com.alibaba.nacos.client.naming.NacosNamingService");
             Constructor constructor = driverImplClass.getConstructor(String.class);
             NamingService vendorImpl = (NamingService)constructor.newInstance(serverList);

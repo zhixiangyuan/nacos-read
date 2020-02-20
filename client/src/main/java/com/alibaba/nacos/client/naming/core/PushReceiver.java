@@ -59,10 +59,10 @@ public class PushReceiver implements Runnable {
             executorService.execute(this);
         } catch (Exception e) {
             NAMING_LOGGER.error("[NA] init udp socket failed", e);
-        }
+}
     }
 
-    @Override
+@Override
     public void run() {
         while (true) {
             try {
