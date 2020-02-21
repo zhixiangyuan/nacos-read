@@ -128,7 +128,11 @@ fi
 if [ ! -f "${BASE_DIR}/logs/start.out" ]; then
   touch "${BASE_DIR}/logs/start.out"
 fi
+
+# 加入调试端口，调试端口目前设置为 6666
+JAVA_DEBUG_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=6666,server=y,suspend=n"
+
 # start
-echo "$JAVA ${JAVA_OPT}" > ${BASE_DIR}/logs/start.out 2>&1 &
-nohup $JAVA ${JAVA_OPT} nacos.nacos >> ${BASE_DIR}/logs/start.out 2>&1 &
+echo "$JAVA $JAVA_DEBUG_OPTS ${JAVA_OPT}" > ${BASE_DIR}/logs/start.out 2>&1 &
+nohup $JAVA $JAVA_DEBUG_OPTS ${JAVA_OPT} nacos.nacos >> ${BASE_DIR}/logs/start.out 2>&1 &
 echo "nacos is starting，you can check the ${BASE_DIR}/logs/start.out"
